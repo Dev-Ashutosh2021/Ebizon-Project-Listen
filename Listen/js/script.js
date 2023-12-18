@@ -2,16 +2,18 @@ var allData;
 
 
 function albumLoad() {
+    storedData = localStorage.getItem('key');
+    allData = JSON.parse(storedData);
     if (document.getElementById('album-div-1')) {
-        document.getElementById("album-div-1").innerHTML='';
+        document.getElementById("album-div-1").innerHTML = '';
         for (let i = 0; i < allData.totalalbums.length; i++) {
             const art = allData.totalartists.find(artist => artist.artist_id === allData.totalalbums[i].artist_id);
 
-            document.getElementById("album-div-1").innerHTML += `<div class="list__item"><a href="album-details.html?albumId=${allData.totalalbums[i].album_id}" class="list__cover"><img src="${allData.totalalbums[i].thumbnail}"
+            document.getElementById("album-div-1").innerHTML += `<div class="list__item"><a href="album-details.php?albumId=${allData.totalalbums[i].album_id}" class="list__cover"><img src="${allData.totalalbums[i].thumbnail}"
                     alt="${allData.totalalbums[i].title}" onclick="albumDetails()"></a>
-            <div class="list__content"><a href="album-details.html?albumId=${allData.totalalbums[i].album_id}"
+            <div class="list__content"><a href="album-details.php?albumId=${allData.totalalbums[i].album_id}"
                     class="list__title text-truncate" onclick="albumDetails()">${allData.totalalbums[i].title}</a>
-                <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${art.artist_id}" onclick="artistDetails()">${art.name}</a></p>
+                <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${art.artist_id}" onclick="artistDetails()">${art.name}</a></p>
             </div>
             <ul class="list__option">
                 <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -26,34 +28,36 @@ function albumLoad() {
 
 
 function bollywoodLoad() {
+    storedData = localStorage.getItem('key');
+    allData = JSON.parse(storedData);
     if (document.getElementById('trending-pane-div')) {
         const bollywoodSongs = allData.totalsongs.filter(song => song.genre_id === 4).slice(0, 6);
-            bollywoodSongs.forEach((songs)=>{
+        bollywoodSongs.forEach((songs) => {
 
-                let org = songs.thumbnail;
+            let org = songs.thumbnail;
 
-                // Using the split method to separate the path by '/'
-                let part = org.split('/');
+            // Using the split method to separate the path by '/'
+            let part = org.split('/');
 
-                // Accessing the last part of the array to get the filename
-                let file = part[part.length - 1];
+            // Accessing the last part of the array to get the filename
+            let file = part[part.length - 1];
 
-                // The artist_id you want to match
-                let desArtistId = songs.artist_id; // Replace with the desired artist_id
+            // The artist_id you want to match
+            let desArtistId = songs.artist_id; // Replace with the desired artist_id
 
-                // Find the artist with the matching artist_id
-                let match = allData.totalartists.find(artist => artist.artist_id === desArtistId);
+            // Find the artist with the matching artist_id
+            let match = allData.totalartists.find(artist => artist.artist_id === desArtistId);
 
-                let originalString = songs.duration;
-                let extractedTime = originalString.substring(0, 5);
+            let originalString = songs.duration;
+            let extractedTime = originalString.substring(0, 5);
 
-                document.getElementById("trending-pane-div").innerHTML += `<div class="list__item" data-song-id="${songs.song_id}" data-song-name="${songs.title}" data-song-artist="${match.name}"
+            document.getElementById("trending-pane-div").innerHTML += `<div class="list__item" data-song-id="${songs.song_id}" data-song-name="${songs.title}" data-song-artist="${match.name}"
                 data-song-album="${songs.album_id}" data-song-url="../Admin/${songs.file_path}" data-song-cover="images/cover/small/${file}">
                 <div class="list__cover"><img src="images/cover/small/${file}" alt="${songs.title}"> <a href="javascript:void(0);"
                         class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${songs.song_id}" aria-label="Play pause" onclick="addCount(${songs.song_id});addRecent(${songs.song_id});getRecentsFive();"><i
                             class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a></div>
-                <div class="list__content"><a href="song-details.html?songId=${songs.song_id}" class="list__title text-truncate" onclick="songDetails()">${songs.title}</a>
-                    <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${songs.artist_id}" onclick="artistDetails()">${match.name}</a></p>
+                <div class="list__content"><a href="song-details.php?songId=${songs.song_id}" class="list__title text-truncate" onclick="songDetails()">${songs.title}</a>
+                    <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${songs.artist_id}" onclick="artistDetails()">${match.name}</a></p>
                 </div>
                 <ul class="list__option">
                     <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -75,42 +79,44 @@ function bollywoodLoad() {
                     </li>
                 </ul>
             </div>`;
-            });
+        });
     } else {
-        setTimeout(bollywoodLoad, 50); 
+        setTimeout(bollywoodLoad, 50);
     }
 }
 
 
 function internationalLoad() {
+    storedData = localStorage.getItem('key');
+    allData = JSON.parse(storedData);
     if (document.getElementById('international-pane-div')) {
         const internationalSongs = allData.totalsongs.filter(song => song.genre_id === 5).slice(0, 6);
-            internationalSongs.forEach((songs)=>{
+        internationalSongs.forEach((songs) => {
 
-                let org = songs.thumbnail;
+            let org = songs.thumbnail;
 
-                // Using the split method to separate the path by '/'
-                let part = org.split('/');
+            // Using the split method to separate the path by '/'
+            let part = org.split('/');
 
-                // Accessing the last part of the array to get the filename
-                let file = part[part.length - 1];
+            // Accessing the last part of the array to get the filename
+            let file = part[part.length - 1];
 
-                // The artist_id you want to match
-                let desArtistId = songs.artist_id; // Replace with the desired artist_id
+            // The artist_id you want to match
+            let desArtistId = songs.artist_id; // Replace with the desired artist_id
 
-                // Find the artist with the matching artist_id
-                let match = allData.totalartists.find(artist => artist.artist_id === desArtistId);
+            // Find the artist with the matching artist_id
+            let match = allData.totalartists.find(artist => artist.artist_id === desArtistId);
 
-                let originalString = songs.duration;
-                let extractedTime = originalString.substring(0, 5);
+            let originalString = songs.duration;
+            let extractedTime = originalString.substring(0, 5);
 
-                document.getElementById("international-pane-div").innerHTML += `<div class="list__item" data-song-id="${songs.song_id}" data-song-name="${songs.title}" data-song-artist="${match.name}"
+            document.getElementById("international-pane-div").innerHTML += `<div class="list__item" data-song-id="${songs.song_id}" data-song-name="${songs.title}" data-song-artist="${match.name}"
                 data-song-album="${songs.album_id}" data-song-url="../Admin/${songs.file_path}" data-song-cover="images/cover/small/${file}">
                 <div class="list__cover"><img src="images/cover/small/${file}" alt="${songs.title}"> <a href="javascript:void(0);"
                         class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${songs.song_id}" aria-label="Play pause" onclick="addCount(${songs.song_id});addRecent(${songs.song_id});getRecentsFive();"><i
                             class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a></div>
-                <div class="list__content"><a href="song-details.html?songId=${songs.song_id}" class="list__title text-truncate" onclick="songDetails()">${songs.title}</a>
-                    <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${songs.artist_id}" onclick="artistDetails()">${match.name}</a></p>
+                <div class="list__content"><a href="song-details.php?songId=${songs.song_id}" class="list__title text-truncate" onclick="songDetails()">${songs.title}</a>
+                    <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${songs.artist_id}" onclick="artistDetails()">${match.name}</a></p>
                 </div>
                 <ul class="list__option">
                     <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -132,34 +138,50 @@ function internationalLoad() {
                     </li>
                 </ul>
             </div>`;
-            });
+        });
     } else {
-        setTimeout(internationalLoad, 50); 
+        setTimeout(internationalLoad, 50);
     }
 }
 
 
 
 function artistLoad() {
+    storedData = localStorage.getItem('key');
+    allData = JSON.parse(storedData);
     if (document.getElementById('artists-div')) {
-         // Display the first 7 artists
-         for (let i = 0; i < 7 && i < allData.totalartists.length; i++) {
+        // Display the first 7 artists
+        for (let i = 0; i < 7 && i < allData.totalartists.length; i++) {
             const artist = allData.totalartists[i];
-            thumb_path=artist.thumbnail;
-            breakdown=thumb_path.split('/');
-            orig_file=breakdown[breakdown.length-1];
-            document.getElementById("artists-div").innerHTML+=`<div class="swiper-slide">
+            thumb_path = artist.thumbnail;
+            breakdown = thumb_path.split('/');
+            orig_file = breakdown[breakdown.length - 1];
+            document.getElementById("artists-div").innerHTML += `<div class="swiper-slide">
             <div class="avatar avatar--xxl d-block text-center">
-                <div class="avatar__image"><a href="artist-details.html?artistId=${artist.artist_id}" onclick="artistDetails()"><img src="images/artists/${orig_file}"
-                            alt="${artist.name}"></a></div><a href="artist-details.html?artistId=${artist.artist_id}"
+                <div class="avatar__image"><a href="artist-details.php?artistId=${artist.artist_id}" onclick="artistDetails()"><img src="images/artists/${orig_file}"
+                            alt="${artist.name}"></a></div><a href="artist-details.php?artistId=${artist.artist_id}"
                     class="avatar__title mt-3" onclick="artistDetails()">${artist.name}</a>
             </div>
         </div>`;
         }
 
     } else {
-        setTimeout(artistLoad, 50); 
+        setTimeout(artistLoad, 50);
     }
+}
+
+
+function home() {
+    fetchAll();
+    topCharts();
+    newReleases();
+    getRecentsFive();
+    albumLoad();
+    bollywoodLoad();
+    internationalLoad();
+    artistLoad();
+    fetchFavAlbum();
+    fetchFavSong();
 }
 
 
@@ -172,19 +194,6 @@ function fetchAll() {
         if (xhr.readyState == 4 && xhr.status == 200) {
             allData = JSON.parse(xhr.responseText);
             localStorage.setItem('key', JSON.stringify(allData));
-            storedData = localStorage.getItem('key');
-            parsedData = JSON.parse(storedData);
-
-            topCharts();
-            newReleases();
-            getRecentsFive();
-            albumLoad();
-            bollywoodLoad();
-            internationalLoad();
-            artistLoad();
-            fetchFavAlbum();
-            fetchFavSong();
-
         }
     };
 
@@ -194,6 +203,8 @@ function fetchAll() {
 
 
 function topCharts() {
+    storedData = localStorage.getItem('key');
+    allData = JSON.parse(storedData);
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'index.php?action=topCharts', true);
 
@@ -241,8 +252,8 @@ function topCharts() {
                     <div class="cover__image"><img src="images/cover/large/${trim_image}" alt="${song.title}"> <button type="button"
                             class="btn btn-play btn-default btn-icon rounded-pill" data-play-id="${song.song_id}" onclick="addCount(${song.song_id});addRecent(${song.song_id});getRecentsFive();"><i
                                 class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></button></div>
-                    <div class="cover__foot"><a href="song-details.html?songId=${song.song_id}" class="cover__title text-truncate" onclick="songDetails()">${song.title}</a>
-                        <p class="cover__subtitle text-truncate"><a href="artist-details.html?artistId=${song.artist_id}" onclick="artistDetails()">${final_artist.name}</a></p>
+                    <div class="cover__foot"><a href="song-details.php?songId=${song.song_id}" class="cover__title text-truncate" onclick="songDetails()">${song.title}</a>
+                        <p class="cover__subtitle text-truncate"><a href="artist-details.php?artistId=${song.artist_id}" onclick="artistDetails()">${final_artist.name}</a></p>
                     </div>
                 </div>
             </div>`;
@@ -256,6 +267,8 @@ function topCharts() {
 
 
 function newReleases() {
+    storedData = localStorage.getItem('key');
+    allData = JSON.parse(storedData);
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'index.php?action=newReleases', true);
 
@@ -303,8 +316,8 @@ function newReleases() {
                     <div class="cover__image"><img src="images/cover/large/${trim_image}" alt="${song.title}"> <button type="button"
                             class="btn btn-play btn-default btn-icon rounded-pill" data-play-id="${song.song_id}" onclick="addCount(${song.song_id});addRecent(${song.song_id});getRecentsFive();""><i
                                 class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></button></div>
-                    <div class="cover__foot"><a href="song-details.html?songId=${song.song_id}" class="cover__title text-truncate" onclick="songDetails()">${song.title}</a>
-                        <p class="cover__subtitle text-truncate"><a href="artist-details.html?artistId=${song.artist_id}" onclick="artistDetails()">${final_artist.name}</a></p>
+                    <div class="cover__foot"><a href="song-details.php?songId=${song.song_id}" class="cover__title text-truncate" onclick="songDetails()">${song.title}</a>
+                        <p class="cover__subtitle text-truncate"><a href="artist-details.php?artistId=${song.artist_id}" onclick="artistDetails()">${final_artist.name}</a></p>
                     </div>
                 </div>
             </div>`;
@@ -363,6 +376,8 @@ function addRecent(song_id) {
 
 
 function getRecentsFive() {
+    storedData = localStorage.getItem('key');
+    allData = JSON.parse(storedData);
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'index.php?action=getRecentsFive', true);
 
@@ -372,7 +387,7 @@ function getRecentsFive() {
             var response = JSON.parse(xhr.responseText);
             // console.log(response);
             // console.log(allData);
-            document.getElementById("recent-pane-div").innerHTML ='';
+            document.getElementById("recent-pane-div").innerHTML = '';
             response.forEach((counter) => {
                 const desired_songs = allData.totalsongs.find(song => song.song_id === counter.song_id);
 
@@ -398,8 +413,8 @@ function getRecentsFive() {
                 <div class="list__cover"><img src="images/cover/small/${file}" alt="${desired_songs.title}"> <a href="javascript:void(0);"
                         class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${desired_songs.song_id}" aria-label="Play pause" onclick="addCount(${desired_songs.song_id});addRecent(${desired_songs.song_id});getRecentsFive();"><i
                             class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a></div>
-                <div class="list__content"><a href="song-details.html?songId=${desired_songs.song_id}" class="list__title text-truncate" onclick="songDetails()">${desired_songs.title}</a>
-                    <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${desired_songs.artist_id}" onclick="artistDetails()">${match.name}</a></p>
+                <div class="list__content"><a href="song-details.php?songId=${desired_songs.song_id}" class="list__title text-truncate" onclick="songDetails()">${desired_songs.title}</a>
+                    <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${desired_songs.artist_id}" onclick="artistDetails()">${match.name}</a></p>
                 </div>
                 <ul class="list__option">
                     <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -433,22 +448,27 @@ function getRecentsFive() {
 
 function register() {
     var form = document.getElementById('registerForm');
+
+    // Bootstrap method to check form validity
+    if (form.checkValidity() === false) {
+        // If the form is not valid, trigger Bootstrap's native validation styles
+        form.classList.add('was-validated');
+        return;
+    }
+
     var formData = new FormData(form);
 
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                var response=JSON.parse(xhr.responseText);
+                var response = JSON.parse(xhr.responseText);
                 // Handle successful response
                 console.log(response);
-                if(response.result=="User already exists")
-                {
+                if (response.result == "User already exists") {
                     document.getElementById("myToast").classList.remove("bg-success");
                     document.getElementById("myToast").classList.add("bg-danger");
-                }
-                else
-                {
+                } else {
                     document.getElementById("myToast").classList.remove("bg-danger");
                     document.getElementById("myToast").classList.add("bg-success");
                 }
@@ -456,7 +476,7 @@ function register() {
 
                 // Create a Bootstrap 5 Toast instance and show it
                 var toast = new bootstrap.Toast(myToast);
-                document.getElementById("mess").innerText=response.result;
+                document.getElementById("mess").innerText = response.result;
                 toast.show();
             } else {
                 // Handle error
@@ -471,24 +491,31 @@ function register() {
 
 
 
+
 function login() {
     var form = document.getElementById('login-form');
+
+    // Bootstrap method to check form validity
+    if (form.checkValidity() === false) {
+        // If the form is not valid, trigger Bootstrap's native validation styles
+        form.classList.add('was-validated');
+        return;
+    }
+
     var formData = new FormData(form);
 
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                var response=JSON.parse(xhr.responseText);
+                var response = JSON.parse(xhr.responseText);
                 // Handle successful response
                 console.log(response);
 
-                if(response.result=="Login successful")
-                {
+                if (response.result == "Login successful") {
                     window.location.href = "home.php";
                 }
-                else
-                {
+                else {
                     document.getElementById("myToast").classList.remove("bg-success");
                     document.getElementById("myToast").classList.add("bg-danger");
                 }
@@ -497,7 +524,7 @@ function login() {
 
                 // Create a Bootstrap 5 Toast instance and show it
                 var toast = new bootstrap.Toast(myToast);
-                document.getElementById("mess").innerText=response.result;
+                document.getElementById("mess").innerText = response.result;
                 toast.show();
             } else {
                 // Handle error
@@ -512,87 +539,11 @@ function login() {
 
 
 
-document.getElementById('search_input').addEventListener('input', function() {
-    document.getElementById("search_results").style.visibility="visible";
-    document.getElementById("album-search").innerHTML='';
-    document.getElementById("song-search").innerHTML='';
-    document.getElementById("artist-search").innerHTML='';
-    // This function will be called every time a character is typed
-    var inputValue = this.value;
-    // Call your desired JavaScript function here or perform any other actions
-    // console.log("Typed character: " + inputValue);
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'index.php?action=searchBar&text='+inputValue, true);
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            let response  = JSON.parse(xhr.responseText);
-            console.log(response);
-
-
-            response.searchartists.forEach((artist) => {
-                thumb_path = artist.thumbnail;
-                breakdown = thumb_path.split('/');
-                orig_file = breakdown[breakdown.length - 1];
-                document.getElementById("artist-search").innerHTML += `<div class="col-xl-3 col-md-4 col-sm-6">
-                <div class="list__item"><a href="artist-details.html?artistId=${artist.artist_id}" class="list__cover"><img src="images/artists/${orig_file}" alt="${artist.name}"></a>
-                    <div class="list__content"><a href="artist-details.html?artistId=${artist.artist_id}" class="list__title text-truncate">${artist.name}</a></div>
-                </div>
-            </div>`;
-            });
-
-
-            response.searchsongs.forEach((song) => {
-                a = song.thumbnail;
-                b = a.split('/');
-                c = b[b.length - 1];
-                // The artist_id you want to match
-                let desArtistId = song.artist_id; // Replace with the desired artist_id
-
-                // Find the artist with the matching artist_id
-                let match = allData.totalartists.find(artist => artist.artist_id === desArtistId);
-                document.getElementById("song-search").innerHTML += `<div class="col-xl-3 col-md-4 col-sm-6">
-                <div class="list__item"><a href="song-details.html?songId=${song.song_id}" class="list__cover"><img src="images/cover/small/${c}"
-                            alt="${song.title}"></a>
-                    <div class="list__content"><a href="song-details.html?songId=${song.song_id}" class="list__title text-truncate">${song.title}</a>
-                        <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${song.artist_id}">${match.name}</a></p>
-                    </div>
-                </div>
-            </div>`;
-            });
-
-
-            response.searchalbums.forEach((album) => {
-                d = album.thumbnail;
-                e = d.split('/');
-                f = e[e.length - 1];
-                // The artist_id you want to match
-                let desArtistId = album.artist_id; // Replace with the desired artist_id
-
-                // Find the artist with the matching artist_id
-                let match = allData.totalartists.find(artist => artist.artist_id === desArtistId);
-                document.getElementById("album-search").innerHTML += `<div class="col-xl-3 col-md-4 col-sm-6">
-                <div class="list__item"><a href="album-details.html?albumId=${album.album_id}" class="list__cover"><img src="images/albums/${f}"
-                            alt="${album.title}"></a>
-                    <div class="list__content"><a href="album-details.html?albumId=${album.album_id}" class="list__title text-truncate">${album.title}</a>
-                        <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${match.artist_id}">${match.name}</a></p>
-                    </div>
-                </div>
-            </div>`;
-            });
-
-        }
-    };
-
-    xhr.send();
-
-});
-
-
 
 function songDetails() {
     if (document.getElementById('song-detail')) {
+        storedData = localStorage.getItem('key');
+        parsedData = JSON.parse(storedData);
         // Get the current URL
         var currentUrl = window.location.href;
 
@@ -654,7 +605,7 @@ function songDetails() {
             <li>${desired_songs.uploaded_at}</li>
         </ul>
         <div class="mb-4">
-            <p class="mb-2">Compose by: <span class="text-dark fw-medium"><a href="artist-details.html?artistId=${match.artist_id}" class="text-dark fw-medium" onclick="artistDetails()">${match.name}</a><span></p>
+            <p class="mb-2">Compose by: <span class="text-dark fw-medium"><a href="artist-details.php?artistId=${match.artist_id}" class="text-dark fw-medium" onclick="artistDetails()">${match.name}</a><span></p>
         </div>
         <ul class="info-list mb-5">
             <li>
@@ -684,9 +635,9 @@ function artistDetails() {
     storedData = localStorage.getItem('key');
     parsedData = JSON.parse(storedData);
     if (document.getElementById('artist-detail') && document.getElementById("song-1") && document.getElementById("song-2") && document.getElementById("artist-album")) {
-        document.getElementById("song-1").innerHTML=``;
-        document.getElementById("song-2").innerHTML=``;
-        document.getElementById("artist-album").innerHTML=``;
+        document.getElementById("song-1").innerHTML = ``;
+        document.getElementById("song-2").innerHTML = ``;
+        document.getElementById("artist-album").innerHTML = ``;
         // Get the current URL
         let currentUrl = window.location.href;
 
@@ -701,17 +652,17 @@ function artistDetails() {
 
         let org = desired_artist.thumbnail;
 
-         // Using the split method to separate the path by '/'
-         let part = org.split('/');
+        // Using the split method to separate the path by '/'
+        let part = org.split('/');
 
-         // Accessing the last part of the array to get the filename
-         let file = part[part.length - 1];
+        // Accessing the last part of the array to get the filename
+        let file = part[part.length - 1];
 
         // // Find the artist with the matching artist_id
-         let album = parsedData.totalalbums.filter(album => album.artist_id == artistId);
-         console.log(album);
-         let song = parsedData.totalsongs.filter(song => song.artist_id == artistId);
-         console.log(song);
+        let album = parsedData.totalalbums.filter(album => album.artist_id == artistId);
+        console.log(album);
+        let song = parsedData.totalsongs.filter(song => song.artist_id == artistId);
+        console.log(song);
 
         // let originalString = desired_songs.duration;
         // let extractedTime = originalString.substring(0, 5);
@@ -740,7 +691,7 @@ function artistDetails() {
     </div>`;
 
         for (i = 0; i < song.length; i++) {
-            document.getElementById("song-span").innerText='Songs';
+            document.getElementById("song-span").innerText = 'Songs';
             const org = song[i].thumbnail;
 
             // Using the split method to separate the path by '/'
@@ -759,7 +710,7 @@ function artistDetails() {
                 <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${song[i].song_id}"
                     aria-label="Play pause" onclick="addCount(${song[i].song_id});addRecent(${song[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
             </div>
-            <div class="list__content"><a href="song-details.html?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
+            <div class="list__content"><a href="song-details.php?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
                 <p class="list__subtitle text-truncate"><a href="javascript:void(0);">${art.name}</a></p>
             </div>
             <ul class="list__option">
@@ -790,7 +741,7 @@ function artistDetails() {
                 <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${song[i].song_id}"
                     aria-label="Play pause" onclick="addCount(${song[i].song_id});addRecent(${song[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
             </div>
-            <div class="list__content"><a href="song-details.html?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
+            <div class="list__content"><a href="song-details.php?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
                 <p class="list__subtitle text-truncate"><a href="javascript:void(0);">${art.name}</a></p>
             </div>
             <ul class="list__option">
@@ -817,18 +768,17 @@ function artistDetails() {
         }
 
 
-        for(i=0;i<album.length;i++)
-        {
-            document.getElementById("album-span").innerText='Albums';
+        for (i = 0; i < album.length; i++) {
+            document.getElementById("album-span").innerText = 'Albums';
             let art = parsedData.totalartists.find(artist => artist.artist_id == album[i].artist_id);
-            document.getElementById("artist-album").innerHTML+=`<div class="swiper-slide">
+            document.getElementById("artist-album").innerHTML += `<div class="swiper-slide">
             <div class="cover cover--round">
                 <div class="cover__head">
                     <ul class="cover__label d-flex">
                         <li><span class="badge rounded-pill bg-white"><i class="ri-heart-line" id="heartIcon${album[i].album_id}" onclick="favClickedAlbum(${album[i].album_id})" style="color:red;"></i></span></li>
                     </ul>
-                </div><a href="album-details.html?albumId=${album[i].album_id}" class="cover__image"><img src="${album[i].thumbnail}" alt="${album[i].title}" onclick="albumDetails()"></a>
-                <div class="cover__foot"><a href="album-details.html?albumId=${album[i].album_id}" class="cover__title text-truncate" onclick="albumDetails()">${album[i].title}</a>
+                </div><a href="album-details.php?albumId=${album[i].album_id}" class="cover__image"><img src="${album[i].thumbnail}" alt="${album[i].title}" onclick="albumDetails()"></a>
+                <div class="cover__foot"><a href="album-details.php?albumId=${album[i].album_id}" class="cover__title text-truncate" onclick="albumDetails()">${album[i].title}</a>
                     <p class="cover__subtitle text-truncate"><a href="javascript:void(0);">${art.name}</a></p>
                 </div>
             </div>
@@ -848,8 +798,8 @@ function albumDetails() {
     storedData = localStorage.getItem('key');
     parsedData = JSON.parse(storedData);
     if (document.getElementById('album-detail-div') && document.getElementById("song-1") && document.getElementById("song-2")) {
-        document.getElementById("song-1").innerHTML=``;
-        document.getElementById("song-2").innerHTML=``;
+        document.getElementById("song-1").innerHTML = ``;
+        document.getElementById("song-2").innerHTML = ``;
 
         // Get the current URL
         let currentUrl = window.location.href;
@@ -864,11 +814,11 @@ function albumDetails() {
         console.log(album);
 
         let desired_artist = parsedData.totalartists.find(artist => artist.artist_id == album.artist_id);
-       
-         let song = parsedData.totalsongs.filter(song => song.album_id == albumId);
-         console.log(song);
 
-        
+        let song = parsedData.totalsongs.filter(song => song.album_id == albumId);
+        console.log(song);
+
+
         document.getElementById("album-detail-div").innerHTML = `<div class="row align-items-center">
         <div class="col-xl-3 col-md-4">
             <div class="cover cover--round">
@@ -884,13 +834,13 @@ function albumDetails() {
                 <li>${song.length} Songs</li>
                 <li>${album.release_date}</li>
             </ul>
-            <p class="mb-5">By: <a href="artist-details.html?artistId=${desired_artist.artist_id}" class="text-dark fw-medium" onclick="artistDetails()">${desired_artist.name}</a>
+            <p class="mb-5">By: <a href="artist-details.php?artistId=${desired_artist.artist_id}" class="text-dark fw-medium" onclick="artistDetails()">${desired_artist.name}</a>
             </p>
         </div>
     </div>`;
 
         for (i = 0; i < song.length; i++) {
-            document.getElementById("songs-all").innerHTML='Songs';
+            document.getElementById("songs-all").innerHTML = 'Songs';
             const org = song[i].thumbnail;
 
             // Using the split method to separate the path by '/'
@@ -907,8 +857,8 @@ function albumDetails() {
                 <div class="list__cover"><img src="images/cover/small/${file}" alt="${song[i].title}">
                     <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${song[i].song_id}" aria-label="Play pause" onclick="addCount(${song[i].song_id});addRecent(${song[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
                 </div>
-                <div class="list__content"><a href="song-details.html?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
-                    <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${art.artist_id}" onclick="artistDetails()">${art.name}</a></p>
+                <div class="list__content"><a href="song-details.php?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
+                    <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${art.artist_id}" onclick="artistDetails()">${art.name}</a></p>
                 </div>
                 <ul class="list__option">
                     <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -938,8 +888,8 @@ function albumDetails() {
             <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${song[i].song_id}"
                 aria-label="Play pause" onclick="addCount(${song[i].song_id});addRecent(${song[i].song_id});"><i class="ri-play-fill icon-play" ></i> <i class="ri-pause-fill icon-pause"></i></a>
         </div>
-            <div class="list__content"><a href="song-details.htmlsongId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
-                <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${art.artist_id}" onclick="artistDetails()">${art.name}</a></p>
+            <div class="list__content"><a href="song-details.phpsongId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
+                <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${art.artist_id}" onclick="artistDetails()">${art.name}</a></p>
             </div>
             <ul class="list__option">
                 <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -975,9 +925,11 @@ function albumDetails() {
 function genres() {
     if (document.getElementById('genre-div')) {
         document.getElementById("genre-div").innerHTML = '';
+        storedData = localStorage.getItem('key');
+        parsedData = JSON.parse(storedData);
         parsedData.totalgenres.forEach((genre) => {
             document.getElementById("genre-div").innerHTML += `<div class="col-xl-3 col-sm-6">
-        <div class="cover cover--round"><a href="genre-details.html?genreId=${genre.genre_id}" class="cover__image" onclick="genreDetails(); fetchFavSong();"><img
+        <div class="cover cover--round"><a href="genre-details.php?genreId=${genre.genre_id}" class="cover__image" onclick="genreDetails(); fetchFavSong();"><img
                     src="${genre.thumbnail}" alt="${genre.name}">
                 <div class="cover__image__content"><span class="cover__title mb-1 fs-6 text-truncate">${genre.name}</span></div>
             </a></div>
@@ -997,7 +949,7 @@ function genreDetails() {
     if (document.getElementById('genre-div1') && document.getElementById('genre-div2')) {
         document.getElementById("genre-div1").innerHTML = ``;
         document.getElementById("genre-div2").innerHTML = ``;
-        
+
         storedData = localStorage.getItem('key');
         parsedData = JSON.parse(storedData);
 
@@ -1013,9 +965,8 @@ function genreDetails() {
         let desired_songs = parsedData.totalsongs.filter(song => song.genre_id == genreId);
 
         console.log(desired_songs);
-        
-        for(i=0;i<desired_songs.length;i++)
-        {
+
+        for (i = 0; i < desired_songs.length; i++) {
             let org = desired_songs[i].thumbnail;
 
             // Using the split method to separate the path by '/'
@@ -1029,20 +980,19 @@ function genreDetails() {
             // Find the artist with the matching artist_id
             let match = parsedData.totalartists.find(artist => artist.artist_id === desArtistId);
             let genre = parsedData.totalgenres.find(genre => genre.genre_id === desired_songs[i].genre_id);
-            document.getElementById("genre-title").innerText=genre.name;
+            document.getElementById("genre-title").innerText = genre.name;
 
             let originalString = desired_songs[i].duration;
             let extractedTime = originalString.substring(0, 5);
-            if(i%2==0)
-            {
+            if (i % 2 == 0) {
                 document.getElementById("genre-div1").innerHTML += `<div class="list__item" data-song-id="${desired_songs[i].song_id}" data-song-name="${desired_songs[i].title}" data-song-artist="${match.name}"
                 data-song-album="${desired_songs[i].album_id}" data-song-url="../Admin/${desired_songs[i].file_path}" data-song-cover="images/cover/small/${file}">
                 <div class="list__cover"><img src="images/cover/small/${file}" alt="${desired_songs[i].title}">
                     <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${desired_songs[i].song_id}"
                         aria-label="Play pause" onclick="addCount(${desired_songs[i].song_id});addRecent(${desired_songs[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
                 </div>
-                <div class="list__content"><a href="song-details.html?songId=${desired_songs[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${desired_songs[i].title}</a>
-                    <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${desired_songs[i].artist_id}" onclick="artistDetails()">${match.name}</a></p>
+                <div class="list__content"><a href="song-details.php?songId=${desired_songs[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${desired_songs[i].title}</a>
+                    <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${desired_songs[i].artist_id}" onclick="artistDetails()">${match.name}</a></p>
                 </div>
                 <ul class="list__option">
                     <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -1066,16 +1016,15 @@ function genreDetails() {
                 </ul>
             </div>`;
             }
-            else
-            {
+            else {
                 document.getElementById("genre-div2").innerHTML += `<div class="list__item" data-song-id="${desired_songs[i].song_id}" data-song-name="${desired_songs[i].title}" data-song-artist="${match.name}"
                 data-song-album="${desired_songs[i].album_id}" data-song-url="../Admin/${desired_songs[i].file_path}" data-song-cover="images/cover/small/${file}">
                 <div class="list__cover"><img src="images/cover/small/${file}" alt="${desired_songs[i].title}">
                     <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${desired_songs[i].song_id}"
                         aria-label="Play pause" onclick="addCount(${desired_songs[i].song_id});addRecent(${desired_songs[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
                 </div>
-                <div class="list__content"><a href="song-details.html?songId=${desired_songs[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${desired_songs[i].title}</a>
-                    <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${desired_songs[i].artist_id}" onclick="artistDetails()">${match.name}</a></p>
+                <div class="list__content"><a href="song-details.php?songId=${desired_songs[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${desired_songs[i].title}</a>
+                    <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${desired_songs[i].artist_id}" onclick="artistDetails()">${match.name}</a></p>
                 </div>
                 <ul class="list__option">
                     <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -1132,10 +1081,9 @@ function musics() {
             desired_songs.sort((a, b) => b.title.localeCompare(a.title));
         }
 
-        document.getElementById("song-count").innerText=`${desired_songs.length} Songs in the list`;
+        document.getElementById("song-count").innerText = `${desired_songs.length} Songs in the list`;
 
-        for(i=0;i<desired_songs.length;i++)
-        {
+        for (i = 0; i < desired_songs.length; i++) {
             let org = desired_songs[i].thumbnail;
 
             // Using the split method to separate the path by '/'
@@ -1151,16 +1099,15 @@ function musics() {
 
             let originalString = desired_songs[i].duration;
             let extractedTime = originalString.substring(0, 5);
-            if(i%2==0)
-            {
+            if (i % 2 == 0) {
                 document.getElementById("song-div1").innerHTML += `<div class="list__item" data-song-id="${desired_songs[i].song_id}" data-song-name="${desired_songs[i].title}" data-song-artist="${match.name}"
                 data-song-album="${desired_songs[i].album_id}" data-song-url="../Admin/${desired_songs[i].file_path}" data-song-cover="images/cover/small/${file}">
                 <div class="list__cover"><img src="images/cover/small/${file}" alt="${desired_songs[i].title}">
                     <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${desired_songs[i].song_id}"
                         aria-label="Play pause" onclick="addCount(${desired_songs[i].song_id});addRecent(${desired_songs[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
                 </div>
-                <div class="list__content"><a href="song-details.html?songId=${desired_songs[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${desired_songs[i].title}</a>
-                    <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${desired_songs[i].artist_id}" onclick="artistDetails()">${match.name}</a></p>
+                <div class="list__content"><a href="song-details.php?songId=${desired_songs[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${desired_songs[i].title}</a>
+                    <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${desired_songs[i].artist_id}" onclick="artistDetails()">${match.name}</a></p>
                 </div>
                 <ul class="list__option">
                     <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -1183,16 +1130,15 @@ function musics() {
                 </ul>
             </div>`;
             }
-            else
-            {
+            else {
                 document.getElementById("song-div2").innerHTML += `<div class="list__item" data-song-id="${desired_songs[i].song_id}" data-song-name="${desired_songs[i].title}" data-song-artist="${match.name}"
                 data-song-album="${desired_songs[i].album_id}" data-song-url="../Admin/${desired_songs[i].file_path}" data-song-cover="images/cover/small/${file}">
                 <div class="list__cover"><img src="images/cover/small/${file}" alt="${desired_songs[i].title}">
                     <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${desired_songs[i].song_id}"
                         aria-label="Play pause" onclick="addCount(${desired_songs[i].song_id});addRecent(${desired_songs[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
                 </div>
-                <div class="list__content"><a href="song-details.html?songId=${desired_songs[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${desired_songs[i].title}</a>
-                    <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${desired_songs[i].artist_id}" onclick="artistDetails()">${match.name}</a></p>
+                <div class="list__content"><a href="song-details.php?songId=${desired_songs[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${desired_songs[i].title}</a>
+                    <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${desired_songs[i].artist_id}" onclick="artistDetails()">${match.name}</a></p>
                 </div>
                 <ul class="list__option">
                     <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -1249,22 +1195,20 @@ function albums() {
             desired_albums.sort((a, b) => a.title.localeCompare(b.title));
         }
 
-        document.getElementById("album-count").innerText=`${desired_albums.length} Albums in the list`;
+        document.getElementById("album-count").innerText = `${desired_albums.length} Albums in the list`;
 
-        for(i=0;i<desired_albums.length;i++)
-        {
+        for (i = 0; i < desired_albums.length; i++) {
             // The artist_id you want to match
             let desArtistId = desired_albums[i].artist_id; // Replace with the desired artist_id
             // Find the artist with the matching artist_id
             let match = parsedData.totalartists.find(artist => artist.artist_id === desArtistId);
 
-            if(i%2==0)
-            {
-                document.getElementById("album-div1").innerHTML += `<div class="list__item"><a href="album-details.html?albumId=${desired_albums[i].album_id}" class="list__cover"><img src="${desired_albums[i].thumbnail}"
+            if (i % 2 == 0) {
+                document.getElementById("album-div1").innerHTML += `<div class="list__item"><a href="album-details.php?albumId=${desired_albums[i].album_id}" class="list__cover"><img src="${desired_albums[i].thumbnail}"
                 alt="${desired_albums[i].title}" onclick="albumDetails()"></a>
-        <div class="list__content"><a href="album-details.html?albumId=${desired_albums[i].album_id}"
+        <div class="list__content"><a href="album-details.php?albumId=${desired_albums[i].album_id}"
                 class="list__title text-truncate" onclick="albumDetails()">${desired_albums[i].title}</a>
-            <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${match.artist_id}" onclick="artistDetails()">${match.name}</a></p>
+            <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${match.artist_id}" onclick="artistDetails()">${match.name}</a></p>
         </div>
         <ul class="list__option">
             <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -1272,13 +1216,12 @@ function albums() {
         </ul>
     </div>`;
             }
-            else
-            {
-                document.getElementById("album-div2").innerHTML += `<div class="list__item"><a href="album-details.html?albumId=${desired_albums[i].album_id}" class="list__cover"><img src="${desired_albums[i].thumbnail}"
+            else {
+                document.getElementById("album-div2").innerHTML += `<div class="list__item"><a href="album-details.php?albumId=${desired_albums[i].album_id}" class="list__cover"><img src="${desired_albums[i].thumbnail}"
                 alt="${desired_albums[i].title}" onclick="albumDetails()"></a>
-        <div class="list__content"><a href="album-details.html?albumId=${desired_albums[i].album_id}"
+        <div class="list__content"><a href="album-details.php?albumId=${desired_albums[i].album_id}"
                 class="list__title text-truncate" onclick="albumDetails()">${desired_albums[i].title}</a>
-            <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${match.artist_id}" onclick="artistDetails()">${match.name}</a></p>
+            <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${match.artist_id}" onclick="artistDetails()">${match.name}</a></p>
         </div>
         <ul class="list__option">
             <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -1314,7 +1257,7 @@ function artists() {
             // Accessing the last part of the array to get the filename
             let file = part[part.length - 1];
             document.getElementById("artist-div").innerHTML += `<div class="col-6 col-xl-2 col-md-3 col-sm-4">
-            <a href="artist-details.html?artistId=${desired_artists[i].artist_id}" class="cover cover--round" onclick="artistDetails()">
+            <a href="artist-details.php?artistId=${desired_artists[i].artist_id}" class="cover cover--round" onclick="artistDetails()">
               <div class="cover__image">
                 <img src="images/artists/${file}" alt="${desired_artists[i].name}" />
               </div>
@@ -1384,8 +1327,8 @@ function recentHistory() {
     <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${filteredSongsInOrder[i].song_id}"
       aria-label="Play pause" onclick="addCount(${filteredSongsInOrder[i].song_id});addRecent(${filteredSongsInOrder[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
   </div>
-  <div class="list__content"><a href="song-details.html?songId=${filteredSongsInOrder[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${filteredSongsInOrder[i].title}</a>
-    <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${filteredSongsInOrder[i].artist_id}" artistDetails()>${match.name}</a></p>
+  <div class="list__content"><a href="song-details.php?songId=${filteredSongsInOrder[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${filteredSongsInOrder[i].title}</a>
+    <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${filteredSongsInOrder[i].artist_id}" artistDetails()>${match.name}</a></p>
   </div>
   <ul class="list__option">
     <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite" data-favorite-id="${filteredSongsInOrder[i].song_id}"><i class="ri-heart-line" id="heartIconRecent${filteredSongsInOrder[i].song_id}" onclick="favClickedSong(${filteredSongsInOrder[i].song_id})" style="color:red;"></i></a></li>
@@ -1411,8 +1354,8 @@ function recentHistory() {
     <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${filteredSongsInOrder[i].song_id}"
       aria-label="Play pause" onclick="addCount(${filteredSongsInOrder[i].song_id});addRecent(${filteredSongsInOrder[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
   </div>
-  <div class="list__content"><a href="song-details.html?songId=${filteredSongsInOrder[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${filteredSongsInOrder[i].title}</a>
-    <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${filteredSongsInOrder[i].artist_id}" artistDetails()>${match.name}</a></p>
+  <div class="list__content"><a href="song-details.php?songId=${filteredSongsInOrder[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${filteredSongsInOrder[i].title}</a>
+    <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${filteredSongsInOrder[i].artist_id}" artistDetails()>${match.name}</a></p>
   </div>
   <ul class="list__option">
     <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite" data-favorite-id="${filteredSongsInOrder[i].song_id}"><i class="ri-heart-line" id="heartIconRecent${filteredSongsInOrder[i].song_id}" onclick="favClickedSong(${filteredSongsInOrder[i].song_id})" style="color:red;"></i></a></li>
@@ -1433,13 +1376,13 @@ function recentHistory() {
                     }
                 }
             }
-            
+
         };
         xhr.send();
     }
     else {
         setTimeout(recentHistory, 50);
-}
+    }
 }
 
 
@@ -1474,15 +1417,11 @@ function checkAuthentication() {
             if (response.authenticated) {
                 // User is authenticated, perform necessary actions
                 console.log('User is authenticated');
-                document.getElementById("username").innerText=response.first;
-                document.getElementById("fullname").innerText=`${response.first} ${response.last}`;
-                login=response.authenticated;
+                login = response.authenticated;
 
             } else {
-                login=response.authenticated;
-                // User is not authenticated, perform necessary actions (e.g., redirect to login page)
                 console.log('User is not authenticated');
-                // window.location.href = 'home.php'; // Replace with your login page URL
+                login = response.authenticated;
             }
         }
     };
@@ -1492,8 +1431,7 @@ function checkAuthentication() {
 
 
 
-function logout()
-{
+function logout() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'index.php?action=logout', true);
 
@@ -1502,7 +1440,7 @@ function logout()
             var response = JSON.parse(xhr.responseText);
             console.log(response);
             localStorage.removeItem('key');
-            window.location.href='home.php';
+            window.location.href = 'home.php';
         }
     };
 
@@ -1515,21 +1453,19 @@ function favClickedAlbum(albumId) {
 
     if (login) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'index.php?action=favAlbum&albumId='+albumId, true);
+        xhr.open('GET', 'index.php?action=favAlbum&albumId=' + albumId, true);
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var response = JSON.parse(xhr.responseText);
                 console.log(response);
 
-                var heart = document.getElementById("heartIcon" +albumId);
-                if(response.result=='added')
-                {
+                var heart = document.getElementById("heartIcon" + albumId);
+                if (response.result == 'added') {
                     heart.classList.remove("ri-heart-line");
                     heart.classList.add("ri-heart-fill");
                 }
-                else
-                { 
+                else {
                     heart.classList.remove("ri-heart-fill");
                     heart.classList.add("ri-heart-line");
                 }
@@ -1540,7 +1476,7 @@ function favClickedAlbum(albumId) {
         xhr.send();
     }
     else {
-        window.location.href = "login.html";
+        window.location.href = "login.php";
     }
 
 }
@@ -1589,21 +1525,19 @@ function favClickedSong(songId) {
 
     if (login) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'index.php?action=favRecentSix&songId='+songId, true);
+        xhr.open('GET', 'index.php?action=favRecentSix&songId=' + songId, true);
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var response = JSON.parse(xhr.responseText);
                 console.log(response);
 
-                var heart = document.getElementById("heartIconRecent" +songId);
-                if(response.result=='added')
-                {
+                var heart = document.getElementById("heartIconRecent" + songId);
+                if (response.result == 'added') {
                     heart.classList.remove("ri-heart-line");
                     heart.classList.add("ri-heart-fill");
                 }
-                else
-                { 
+                else {
                     heart.classList.remove("ri-heart-fill");
                     heart.classList.add("ri-heart-line");
                 }
@@ -1614,7 +1548,7 @@ function favClickedSong(songId) {
         xhr.send();
     }
     else {
-        window.location.href = "login.html";
+        window.location.href = "login.php";
     }
 
 }
@@ -1712,12 +1646,12 @@ function favourites() {
                         <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${song[i].song_id}"
                             aria-label="Play pause" onclick="addCount(${song[i].song_id});addRecent(${song[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
                     </div>
-                    <div class="list__content"><a href="song-details.html?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
+                    <div class="list__content"><a href="song-details.php?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
                         <p class="list__subtitle text-truncate"><a href="javascript:void(0);">${art.name}</a></p>
                     </div>
                     <ul class="list__option">
                         <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
-                                data-favorite-id="${song[i].song_id}"><i class="ri-heart-line" id="heartIconRecent${song[i].song_id}" onclick="favClickedSong(${song[i].song_id})" style="color:red;"></i></a></li>
+                                data-favorite-id="${song[i].song_id}"><i class="ri-heart-line" id="heartIconRecent${song[i].song_id}" onclick="favClickedSong(${song[i].song_id});favourites();" style="color:red;"></i></a></li>
                         <li>${extractedTime}</li>
                         <li class="dropstart d-inline-flex"><a class="dropdown-link" href="javascript:void(0);" role="button"
                                 data-bs-toggle="dropdown" aria-label="Cover options" aria-expanded="false"><i
@@ -1743,12 +1677,12 @@ function favourites() {
                         <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${song[i].song_id}"
                             aria-label="Play pause" onclick="addCount(${song[i].song_id});addRecent(${song[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
                     </div>
-                    <div class="list__content"><a href="song-details.html?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
+                    <div class="list__content"><a href="song-details.php?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
                         <p class="list__subtitle text-truncate"><a href="javascript:void(0);">${art.name}</a></p>
                     </div>
                     <ul class="list__option">
                         <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
-                                data-favorite-id="${song[i].song_id}"><i class="ri-heart-line" id="heartIconRecent${song[i].song_id}" onclick="favClickedSong(${song[i].song_id})" style="color:red;"></i></a></li>
+                                data-favorite-id="${song[i].song_id}"><i class="ri-heart-line" id="heartIconRecent${song[i].song_id}" onclick="favClickedSong(${song[i].song_id});favourites();" style="color:red;"></i></a></li>
                         <li>${extractedTime}</li>
                         <li class="dropstart d-inline-flex"><a class="dropdown-link" href="javascript:void(0);" role="button"
                                 data-bs-toggle="dropdown" aria-label="Cover options" aria-expanded="false"><i
@@ -1768,7 +1702,7 @@ function favourites() {
                 </div>`;
                     }
                 }
-                
+
 
 
                 for (i = 0; i < album.length; i++) {
@@ -1777,10 +1711,10 @@ function favourites() {
                     <div class="cover cover--round">
                         <div class="cover__head">
                             <ul class="cover__label d-flex">
-                                <li><span class="badge rounded-pill bg-white"><i class="ri-heart-line" id="heartIcon${album[i].album_id}" onclick="favClickedAlbum(${album[i].album_id})" style="color:red;"></i></span></li>
+                                <li><span class="badge rounded-pill bg-white"><i class="ri-heart-line" id="heartIcon${album[i].album_id}" onclick="favClickedAlbum(${album[i].album_id});favourites();" style="color:red;"></i></span></li>
                             </ul>
-                        </div><a href="album-details.html?albumId=${album[i].album_id}" class="cover__image"><img src="${album[i].thumbnail}" alt="${album[i].title}" onclick="albumDetails()"></a>
-                        <div class="cover__foot"><a href="album-details.html?albumId=${album[i].album_id}" class="cover__title text-truncate" onclick="albumDetails()">${album[i].title}</a>
+                        </div><a href="album-details.php?albumId=${album[i].album_id}" class="cover__image"><img src="${album[i].thumbnail}" alt="${album[i].title}" onclick="albumDetails()"></a>
+                        <div class="cover__foot"><a href="album-details.php?albumId=${album[i].album_id}" class="cover__title text-truncate" onclick="albumDetails()">${album[i].title}</a>
                             <p class="cover__subtitle text-truncate"><a href="javascript:void(0);">${art.name}</a></p>
                         </div>
                     </div>
@@ -1806,7 +1740,7 @@ function openCreatePlaylistModal() {
         $("#createPlaylistModal").modal('show');
     }
     else {
-        window.location.href = "login.html";
+        window.location.href = "login.php";
     }
 
 }
@@ -1862,7 +1796,7 @@ function showPlaylistModal() {
             for (let i = 0; i < response.length; i++) {
                 var row = document.createElement('tr');
                 row.setAttribute('data-id', response[i].playlist_id); // Set the playlistId as a data attribute
-                row.innerHTML = `<td><a href="playlist-details.html?playlistId=${response[i].playlist_id}" onclick="playlistDetails()">${response[i].title}</a></td>
+                row.innerHTML = `<td><a href="playlist-details.php?playlistId=${response[i].playlist_id}" onclick="playlistDetails()">${response[i].title}</a></td>
                     <td><i class="fa-solid fa-trash fa-xl" style="color: red" onclick="deletePlaylist(${response[i].playlist_id})"></i></td>`;
                 tbody.appendChild(row);
             }
@@ -1930,7 +1864,7 @@ function playlistDetails() {
                 var response = JSON.parse(xhr.responseText);
                 console.log(response);
 
-                let playlist=parsedData.totalplaylists.find(song => song.playlist_id == playlistId);
+                let playlist = parsedData.totalplaylists.find(song => song.playlist_id == playlistId);
 
                 let playlist_songs = response.filter(song => song.playlist_id == playlistId);
                 // Extract song IDs from the playlist_songs array
@@ -1941,12 +1875,10 @@ function playlistDetails() {
 
                 console.log(song);
 
-                if(song.length==0)
-                {
+                if (song.length == 0) {
                     document.getElementById("songs-all").innerHTML = `Playlist Empty`;
                 }
-                else
-                {
+                else {
                     document.getElementById("songs-all").innerHTML = `${playlist.title}`;
                 }
 
@@ -1967,8 +1899,8 @@ function playlistDetails() {
                         <div class="list__cover"><img src="images/cover/small/${file}" alt="${song[i].title}">
                             <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${song[i].song_id}" aria-label="Play pause" onclick="addCount(${song[i].song_id});addRecent(${song[i].song_id});"><i class="ri-play-fill icon-play"></i> <i class="ri-pause-fill icon-pause"></i></a>
                         </div>
-                        <div class="list__content"><a href="song-details.html?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
-                            <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${art.artist_id}" onclick="artistDetails()">${art.name}</a></p>
+                        <div class="list__content"><a href="song-details.php?songId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
+                            <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${art.artist_id}" onclick="artistDetails()">${art.name}</a></p>
                         </div>
                         <ul class="list__option">
                             <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -1978,13 +1910,12 @@ function playlistDetails() {
                                     data-bs-toggle="dropdown" aria-label="Cover options" aria-expanded="false"><i
                                         class="ri-more-fill"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-sm">
-                                    <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-playlist-id="${song[i].song_id}">Add to
+                                    <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-playlist-id="${song[i].song_id}" onclick="fillPlaylistModal(${song[i].song_id})">Add to
                                             playlist</a></li>
                                     <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-queue-id="${song[i].song_id}">Add to queue</a>
                                     </li>
                                     <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-next-id="${song[i].song_id}">Next to play</a>
                                     </li>
-                                    <li><a class="dropdown-item" href="javascript:void(0);" role="button">Share</a></li>
                                     <li class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-play-id="${song[i].song_id}">Play</a></li>
                                 </ul>
@@ -1999,8 +1930,8 @@ function playlistDetails() {
                     <a href="javascript:void(0);" class="btn btn-play btn-sm btn-default btn-icon rounded-pill" data-play-id="${song[i].song_id}"
                         aria-label="Play pause" onclick="addCount(${song[i].song_id});addRecent(${song[i].song_id});"><i class="ri-play-fill icon-play" ></i> <i class="ri-pause-fill icon-pause"></i></a>
                 </div>
-                    <div class="list__content"><a href="song-details.htmlsongId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
-                        <p class="list__subtitle text-truncate"><a href="artist-details.html?artistId=${art.artist_id}" onclick="artistDetails()">${art.name}</a></p>
+                    <div class="list__content"><a href="song-details.phpsongId=${song[i].song_id}" class="list__title text-truncate" onclick="songDetails()">${song[i].title}</a>
+                        <p class="list__subtitle text-truncate"><a href="artist-details.php?artistId=${art.artist_id}" onclick="artistDetails()">${art.name}</a></p>
                     </div>
                     <ul class="list__option">
                         <li><a href="javascript:void(0);" role="button" class="d-inline-flex" aria-label="Favorite"
@@ -2010,13 +1941,12 @@ function playlistDetails() {
                                 data-bs-toggle="dropdown" aria-label="Cover options" aria-expanded="false"><i
                                     class="ri-more-fill"></i></a>
                             <ul class="dropdown-menu dropdown-menu-sm">
-                                <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-playlist-id="${song[i].song_id}">Add to
+                                <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-playlist-id="${song[i].song_id}" onclick="fillPlaylistModal(${song[i].song_id})">Add to
                                         playlist</a></li>
                                 <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-queue-id="${song[i].song_id}">Add to queue</a>
                                 </li>
                                 <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-next-id="${song[i].song_id}">Next to play</a>
                                 </li>
-                                <li><a class="dropdown-item" href="javascript:void(0);" role="button">Share</a></li>
                                 <li class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-play-id="${song[i].song_id}">Play</a></li>
                             </ul>
@@ -2040,27 +1970,24 @@ function playlistDetails() {
 
 
 
-function fillPlaylistModal(song_id)
-{
-    if(login)
-    {
+function fillPlaylistModal(song_id) {
+    if (login) {
+        fetchAll();
         $("#addToPlaylistModal").modal('show');
         storedData = localStorage.getItem('key');
         parsedData = JSON.parse(storedData);
         console.log(parsedData.totalplaylists);
-        document.getElementById("addPlaylist").innerHTML=`<option selected disabled>Select Playlist</option>`
-        document.getElementById("hidden_song_id").value=song_id;
-        for(i=0;i<parsedData.totalplaylists.length;i++)
-        {
-            document.getElementById("addPlaylist").innerHTML+=`
+        document.getElementById("addPlaylist").innerHTML = `<option selected disabled>Select Playlist</option>`
+        document.getElementById("hidden_song_id").value = song_id;
+        for (i = 0; i < parsedData.totalplaylists.length; i++) {
+            document.getElementById("addPlaylist").innerHTML += `
             <option value="${parsedData.totalplaylists[i].playlist_id}">${parsedData.totalplaylists[i].title}</option>`;
         }
 
     }
-    else
-    {
-        window.location.href = "login.html";
-    }   
+    else {
+        window.location.href = "login.php";
+    }
 }
 
 
@@ -2081,3 +2008,136 @@ function addToPlaylist() {
 
     xhr.send(formData);
 }
+
+
+
+function editProfile() {
+    if (document.getElementById('f_name') && document.getElementById("l_name") && document.getElementById("oldPic")) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'index.php?action=editProfile', true);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = JSON.parse(xhr.responseText);
+                console.log(response);
+                document.getElementById("f_name").value = response.first_name;
+                document.getElementById("l_name").value = response.last_name;
+                if (response.profile_pic != null) {
+                    document.getElementById("oldPic").value = response.profile_pic;
+                    document.getElementById("mainProfile").src = response.profile_pic;
+                }
+                else {
+                    document.getElementById("mainProfile").src = 'images/users/thumb.jpg';
+                    document.getElementById("oldPic").value = 'images/users/thumb.jpg';
+                }
+            }
+        }
+
+        xhr.send();
+    }
+    else {
+        setTimeout(editProfile, 50);
+    }
+}
+
+
+
+function saveUserEditDetail() {
+    let userUpdateForm = new FormData();
+
+    firstName = document.getElementById('f_name').value;
+    lastName = document.getElementById('l_name').value;
+    profilePic = document.getElementById('profile').files[0];
+    oldPic = document.getElementById('oldPic').value;
+
+    userUpdateForm.append('firstName', firstName);
+    userUpdateForm.append('lastName', lastName);
+    userUpdateForm.append('profilePic', profilePic);
+    userUpdateForm.append('oldPic', oldPic);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'index.php?action=saveUserEditDetail', true);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response);
+
+            var myToast = document.getElementById('myToast');
+
+            // Create a Bootstrap 5 Toast instance and show it
+            var toast = new bootstrap.Toast(myToast);
+            document.getElementById("mess").innerText = response.result;
+            toast.show();
+        }
+    }
+
+    xhr.send(userUpdateForm);
+}
+
+
+
+// Event listener for the popstate event
+window.addEventListener("popstate", function () {
+
+    // Extract the part after the last / and before the file extension
+    var path = window.location.href.split('/').pop().split('.')[0];
+
+    // Replace %20 with a space
+    var result = path.replace('%20', ' ');
+
+    switch (result) {
+
+        case 'home':
+            fetchAll();
+            break;
+
+        case 'genres':
+            genres();
+            break;
+
+        case 'music':
+            musics();
+            break;
+
+        case 'albums':
+            albums();
+            break;
+
+        case 'artists':
+            artists();
+            break;
+
+        case 'favorites':
+            favourites();
+            break;
+
+        case 'history':
+            recentHistory();
+            break;
+
+        case 'song-details':
+            songDetails();
+            break;
+
+        case 'artist-details':
+            artistDetails();
+            break;
+
+        case 'genre-details':
+            genreDetails();
+            break;
+
+        case 'album-details':
+            albumDetails();
+            break;
+
+        case 'profile':
+            editProfile();
+            break;
+
+        default:
+            console.log('No page found');
+    }
+
+});

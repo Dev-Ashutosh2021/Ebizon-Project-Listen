@@ -350,41 +350,6 @@ class MusicController extends BaseController
     }
 
 
-    public function saveUserDetail()
-    {
-        $requestMethod = $_SERVER["REQUEST_METHOD"];
-
-        if (strtoupper($requestMethod) === 'POST') {
-            try {
-                // Retrieve form data
-                $userid = $_POST['userid'];
-                $firstname = $_POST['firstName'];
-                $lastname = $_POST['LastName'];
-                $username = $_POST['userName'];
-                $email = $_POST['userEmail'];
-
-                // Initialize MySQLi connection
-                $params = [$firstname, $lastname, $username, $email, $userid];
-                $adminModel = new MusicModel();
-                $result = $adminModel->editUser($params);
-                if ($result) {
-                    echo json_encode(['result' => true]);
-                    exit;
-                } else {
-                    echo json_encode(['error' => 'Error executing query.']);
-                    exit;
-                }
-            } catch (Exception $e) {
-                // Exception handling
-                echo json_encode(array('error' => $e->getMessage()));
-            }
-        } else {
-            // Method not supported handling
-            echo json_encode(array('error' => 'Method not supported'));
-        }
-    }
-
-
 
     public function deleteUser()
     {
@@ -1013,5 +978,88 @@ class MusicController extends BaseController
         }
         exit;
     }
+
+
+    public function editProfile()
+    {
+        try {
+            $adminModel = new MusicModel();
+            $result = $adminModel->getUserById($_SESSION['id']);
+
+            if ($result !== false) {
+                echo json_encode($result);
+            } else {
+                echo json_encode(['error' => 'Error fetching playlists.']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['error' => 'Error: ' . $e->getMessage()]);
+        }
+        exit;
+    }
+
+
+
+    public function saveUserEditDetail()
+    {
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+
+        if (strtoupper($requestMethod) === 'POST') {
+            try {
+                // Retrieve form data
+                $firstname = $_POST['firstName'];
+                $lastname = $_POST['lastName'];
+                $oldImage = $_POST['oldPic']; // Corrected field name
+
+                $_SESSION['first']=$firstname;
+                $_SESSION['last']=$lastname;
+
+                $adminModel = new MusicModel();
+
+                if (isset($_FILES["profilePic"]["tmp_name"])) {
+                    // Validate image format
+                    $allowedFormats = ["image/jpeg", "image/png", "image/gif"];
+                    $imageInfo = getimagesize($_FILES["profilePic"]["tmp_name"]);
+
+                    if ($imageInfo === false || !in_array($imageInfo['mime'], $allowedFormats)) {
+                        echo json_encode(['error' => 'Invalid image format. Allowed formats: JPEG, PNG, GIF']);
+                        exit;
+                    }
+
+                    $thumbnailUploadPath = "images/users/" . basename($_FILES["profilePic"]["name"]);
+                    $_SESSION['pic']=$thumbnailUploadPath;
+                    move_uploaded_file($_FILES["profilePic"]["tmp_name"], $thumbnailUploadPath);
+
+                    $params = [$firstname, $lastname, $thumbnailUploadPath, $_SESSION['id']];
+                    $result = $adminModel->saveUserEditDetail($params);
+
+                    if ($result) {
+                        echo json_encode(['result' => 'Sucessfully Updated']);
+                        exit;
+                    } else {
+                        echo json_encode(['error' => 'Error executing query.']);
+                        exit;
+                    }
+                } else {
+                    $params = [$firstname, $lastname, $oldImage, $_SESSION['id']];
+                    $result = $adminModel->saveUserEditDetail($params);
+
+                    if ($result) {
+                        echo json_encode(['result' => 'Sucessfully Updated']);
+                        exit;
+                    } else {
+                        echo json_encode(['error' => 'Error executing query.']);
+                        exit;
+                    }
+                }
+            } catch (Exception $e) {
+                // Exception handling
+                echo json_encode(['error' => $e->getMessage()]);
+            }
+        } else {
+            // Method not supported handling
+            echo json_encode(['error' => 'Method not supported']);
+        }
+    }
+
 
 }

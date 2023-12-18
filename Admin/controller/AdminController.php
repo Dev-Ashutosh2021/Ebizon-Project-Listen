@@ -2,6 +2,80 @@
 class AdminController extends BaseController
 {
 
+
+    function register()
+    {
+        header('Content-Type: application/json');
+
+        try {
+            // Sanitize and validate input
+            $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+            $first_name = htmlspecialchars($_POST['firstName']);
+            $last_name = htmlspecialchars($_POST['lastName']);
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+            if (!$email || !$first_name || !$last_name || !$password) {
+                throw new Exception('Invalid input data');
+            }
+
+            // Check if the user already exists
+            $adminModel = new AdminModel();
+            $userExists = $adminModel->checkUserExists([$email]);
+
+            if ($userExists) {
+                echo json_encode(['result' => 'User already exists']);
+            } else {
+                // Proceed with registration
+                $params = [$email, $first_name, $last_name, $password];
+                $result = $adminModel->register($params);
+
+                // Assuming $result is a boolean indicating success or failure
+                if ($result) {
+                    echo json_encode(['result' => 'Registration successful']);
+                } else {
+                    echo json_encode(['result' => 'Registration failed']);
+                }
+            }
+        } catch (Exception $e) {
+            echo json_encode(['error' => 'Error: ' . $e->getMessage()]);
+        }
+
+        exit;
+    }
+
+
+    public function login()
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $email = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+            $password = $_POST['password'];
+
+            if (!$email || !$password) {
+                throw new Exception('Invalid input data');
+            }
+
+            $adminModel = new AdminModel();
+            $loginResult = $adminModel->login($email, $password);
+
+            echo json_encode($loginResult);
+        } catch (Exception $e) {
+            echo json_encode(['error' => 'Error: ' . $e->getMessage()]);
+        }
+
+        exit;
+    }
+
+
+    function logout()
+    {
+        session_unset();
+        session_destroy();
+        echo json_encode(['status' => 'successfully logout']);
+    }
+    
+
     public function addSong()
     {
         function resizeImage($sourcePath, $destinationPath, $newWidth, $newHeight)

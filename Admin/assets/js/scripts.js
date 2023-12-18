@@ -15,6 +15,113 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 
+function register() {
+    var form = document.getElementById('registerForm');
+
+    // Bootstrap method to check form validity
+    if (form.checkValidity() === false) {
+        // If the form is not valid, trigger Bootstrap's native validation styles
+        form.classList.add('was-validated');
+        return;
+    }
+
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                // Handle successful response
+                console.log(response);
+                if (response.result == "User already exists") {
+                    document.getElementById("myToast").classList.remove("bg-success");
+                    document.getElementById("myToast").classList.add("bg-danger");
+                } else {
+                    document.getElementById("myToast").classList.remove("bg-danger");
+                    document.getElementById("myToast").classList.add("bg-success");
+                }
+                var myToast = document.getElementById('myToast');
+
+                // Create a Bootstrap 5 Toast instance and show it
+                var toast = new bootstrap.Toast(myToast);
+                document.getElementById("mess").innerText = response.result;
+                toast.show();
+            } else {
+                // Handle error
+                console.error('Error:', xhr.status);
+            }
+        }
+    };
+
+    xhr.open('POST', 'index.php?action=register', true);
+    xhr.send(formData);
+}
+
+
+
+function login() {
+    var form = document.getElementById('login-form');
+
+    // Bootstrap method to check form validity
+    if (form.checkValidity() === false) {
+        // If the form is not valid, trigger Bootstrap's native validation styles
+        form.classList.add('was-validated');
+        return;
+    }
+
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                // Handle successful response
+                console.log(response);
+
+                if (response.result == "Login successful") {
+                    window.location.href = "home.php";
+                }
+                else {
+                    document.getElementById("myToast").classList.remove("bg-success");
+                    document.getElementById("myToast").classList.add("bg-danger");
+                }
+
+                var myToast = document.getElementById('myToast');
+
+                // Create a Bootstrap 5 Toast instance and show it
+                var toast = new bootstrap.Toast(myToast);
+                document.getElementById("mess").innerText = response.result;
+                toast.show();
+            } else {
+                // Handle error
+                console.error('Error:', xhr.status);
+            }
+        }
+    };
+
+    xhr.open('POST', 'index.php?action=login', true);
+    xhr.send(formData);
+}
+
+
+
+function logout() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'index.php?action=logout', true);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response);
+            window.location.href = 'login.php';
+        }
+    };
+
+    xhr.send();
+}
+
 
 
 function initializeTable() {

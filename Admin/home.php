@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: login.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,28 +35,24 @@
                     <form enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Title</label>
-                            <input type="text" class="form-control" name="editTitle" id="editTitle"
-                                aria-describedby="emailHelp">
+                            <input type="text" class="form-control" name="editTitle" id="editTitle" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Artists</label>
-                            <select class="form-select" aria-label="Default select example" name="editArtistSelect"
-                                id="editArtistSelect" name="artist" required>
+                            <select class="form-select" aria-label="Default select example" name="editArtistSelect" id="editArtistSelect" name="artist" required>
                                 <option selected disabled>Select artist</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Thumbnail</label>
-                            <input class="form-control" type="file" id="editFormFileThumbnail"
-                                name="editFormFileThumbnail">
+                            <input class="form-control" type="file" id="editFormFileThumbnail" name="editFormFileThumbnail">
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Audio</label>
                             <input class="form-control" type="file" id="editFormFileAudio" name="editFormFileAudio">
                         </div>
                         <label for="formFile" class="form-label">Genre</label>
-                        <select class="form-select" aria-label="Default select example" id="editGenreSelect"
-                            name="editGenreSelect">
+                        <select class="form-select" aria-label="Default select example" id="editGenreSelect" name="editGenreSelect">
                             <option selected disabled>Select genre</option>
                         </select>
                         <input type="hidden" name="songid" id="editHidden">
@@ -100,8 +103,7 @@
                     <form enctype="multipart/form-data" id="addArtistForm">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control" id="artistName"
-                                aria-describedby="emailHelp" required>
+                            <input type="text" name="name" class="form-control" id="artistName" aria-describedby="emailHelp" required>
                         </div>
                         <div class="mb-3">
                             <label for="formFile" class="form-label">Thumbnail</label>
@@ -109,8 +111,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" name="submit" value="Add" class="btn btn-primary"
-                                onclick="addArtist()">Add</button>
+                            <button type="button" name="submit" value="Add" class="btn btn-primary" onclick="addArtist()">Add</button>
                         </div>
                     </form>
                 </div>
@@ -130,13 +131,11 @@
                     <form enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Name</label>
-                            <input type="text" name="genrename" class="form-control" id="genreName"
-                                aria-describedby="emailHelp" required>
+                            <input type="text" name="genrename" class="form-control" id="genreName" aria-describedby="emailHelp" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" name="submit" value="Add" class="btn btn-primary"
-                                onclick="addGenre()">Add</button>
+                            <button type="button" name="submit" value="Add" class="btn btn-primary" onclick="addGenre()">Add</button>
                         </div>
                     </form>
                 </div>
@@ -156,13 +155,11 @@
                     <form enctype="multipart/form-data" id="addSongForm">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Title</label>
-                            <input type="text" name="title" class="form-control" id="title" aria-describedby="emailHelp"
-                                required>
+                            <input type="text" name="title" class="form-control" id="title" aria-describedby="emailHelp" required>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Artists</label>
-                            <select class="form-select" aria-label="Default select example" id="artistSelect"
-                                name="artist" required>
+                            <select class="form-select" aria-label="Default select example" id="artistSelect" name="artist" required>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -174,13 +171,11 @@
                             <input required class="form-control" name="audio" type="file" id="formFileAudio">
                         </div>
                         <label for="formFile" class="form-label">Genre</label>
-                        <select class="form-select" aria-label="Default select example" name="genre" id="genreSelect"
-                            required>
+                        <select class="form-select" aria-label="Default select example" name="genre" id="genreSelect" required>
                         </select>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" name="button" value="Add" class="btn btn-primary"
-                                onclick="addSong()">Add</button>
+                            <button type="button" name="button" value="Add" class="btn btn-primary" onclick="addSong()">Add</button>
                         </div>
                     </form>
                 </div>
@@ -201,13 +196,11 @@
                     <form>
                         <div class="mb-3">
                             <label for="userid" class="form-label">ID</label>
-                            <input class="form-control" type="text" value="" aria-label="readonly input example"
-                                readonly id="userid" name="userid">
+                            <input class="form-control" type="text" value="" aria-label="readonly input example" readonly id="userid" name="userid">
                         </div>
                         <div class="mb-3">
                             <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstName" aria-describedby="emailHelp"
-                                name="firstName">
+                            <input type="text" class="form-control" id="firstName" aria-describedby="emailHelp" name="firstName">
                         </div>
                         <div class="mb-3">
                             <label for="LastName" class="form-label">Last Name</label>
@@ -258,18 +251,16 @@
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="#">Admin Panel</a>
         <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-                class="fas fa-bars"></i></button>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         </form>
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0);" onclick="logout();">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -292,7 +283,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Users
                         </a>
-                        <a class="nav-link" href="javascript:void(0);">
+                        <a class="nav-link" href="javascript:void(0);" onclick="logout();">
                             <div class="sb-nav-link-icon"><i class="fas fa-right-from-bracket"></i></div>
                             Log Out
                         </a>
@@ -300,7 +291,7 @@
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Admin
+                    <?php echo $_SESSION['first']." ".$_SESSION['last']; ?>
                 </div>
             </nav>
         </div>

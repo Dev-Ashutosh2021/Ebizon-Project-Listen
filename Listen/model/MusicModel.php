@@ -88,12 +88,6 @@ class MusicModel extends Database
 
 
 
-    public function editUser($params)
-    {
-        return $this->executeStatement("UPDATE users SET first_name=?, last_name=?, username=?, email=? WHERE user_id=?","ssssi",$params);
-    }
-
-
 
     public function deleteUser($params)
     {
@@ -172,6 +166,14 @@ class MusicModel extends Database
                 $_SESSION['first']=$userData['first_name'];
                 $_SESSION['last']=$userData['last_name'];
                 $_SESSION['id']=$userData['user_id'];
+                if($userData['profile_pic']==NULL)
+                {
+                    $_SESSION['pic']='images/users/thumb.jpg';
+                }
+                else
+                {
+                    $_SESSION['pic']=$userData['profile_pic'];
+                }
                 return ['result' => 'Login successful', 'user_data' => $userData];
             } else {
                 // Incorrect password
@@ -342,5 +344,36 @@ class MusicModel extends Database
     {
         return $this->select("SELECT * FROM playlist_songs where playlist_id=?","i",$params);
     }
+
+
+    public function getUserById($id)
+    {
+        $query = "SELECT * FROM users WHERE user_id = ?";
+        $types = "s";
+        $params = [$id];
+
+        try {
+            $result = $this->select($query, $types, $params);
+
+            // Check if there is at least one row in the result set
+            if (!empty($result)) {
+                // Return the first row (assuming email is unique)
+                return $result[0];
+            } else {
+                // User not found
+                return null;
+            }
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+
+
+    public function saveUserEditDetail($params)
+    {
+        return $this->executeStatement("UPDATE users SET first_name=?, last_name=?, profile_pic=? WHERE user_id=?","sssi",$params);
+    }
+
 }
 ?>

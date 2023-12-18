@@ -9,7 +9,7 @@ $uri = explode( '/', $uri );
 require PROJECT_ROOT_PATH . "./controller/AdminController.php";
 
 if ($uri[3]=='') {
-    header("location:home.html");
+    header("location:home.php");
 }
 
 // Add this code at the end of your index.php file
