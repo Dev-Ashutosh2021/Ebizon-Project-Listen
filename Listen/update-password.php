@@ -24,27 +24,23 @@
                         </div>
                         <div class="card">
                             <div class="card-body p-sm-5">
-                                <h4>Login to <span class="text-primary">Listen</span></h4>
-                                <p class="fs-6">Welcome back! login with your data that you entered during registration
+                                <h4>Update <span class="text-primary">Password</span></h4>
+                                <p class="fs-6">Welcome to update password wizard !
                                 </p>
-                                <form id="login-form" class="mt-5 needs-validation" novalidate>
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label fw-medium">Email</label>
-                                        <input type="email" id="email" class="form-control" name="email" required>
-                                        <div class="invalid-feedback">Please enter a valid email address.</div>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="password" class="form-label fw-medium">Password</label>
+                                <form id="update-form" class="mt-5 needs-validation" novalidate>
+                                    <div class="mb-5">
+                                        <label for="password" class="form-label fw-medium">Enter New Password</label>
                                         <input type="password" id="password" class="form-control" name="password" required>
-                                        <div class="invalid-feedback">Please enter your password.</div>
-                                    </div>
-                                    <div class="mb-4 text-end">
-                                        <a href="password.php" class="link-primary fw-medium">Forgot Password?</a>
+                                        <div class="invalid-feedback">Please enter your new password.</div>
                                     </div>
                                     <div class="mb-5">
-                                        <input type="button" class="btn btn-primary w-100" value="Login" onclick="login()">
+                                        <label for="password" class="form-label fw-medium">Confirm New Password</label>
+                                        <input type="password" id="password" class="form-control" name="con-password" required>
+                                        <div class="invalid-feedback">Please enter your confirm password.</div>
                                     </div>
-                                    <p>Not registered yet?<br><a href="register.php" class="fw-medium external">Register</a></p>
+                                    <div class="mb-5">
+                                        <input type="button" class="btn btn-primary w-100" value="Update" onclick="updatePassword()">
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -57,6 +53,5 @@
     <script src="js/scripts.bundle.js"></script>
     <script src="js/script.js"></script>
 </body>
-<!-- Mirrored from www.kri8thm.in/html/listen/theme/demo/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Nov 2023 15:18:34 GMT -->
 
 </html>

@@ -1749,6 +1749,14 @@ function openCreatePlaylistModal() {
 
 function createPlaylist() {
     let form = document.getElementById("createPlaylistForm");
+
+    // Bootstrap method to check form validity
+    if (form.checkValidity() === false) {
+        // If the form is not valid, trigger Bootstrap's native validation styles
+        form.classList.add('was-validated');
+        return;
+    }
+
     let formData = new FormData(form);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'index.php?action=createPlaylist', true);
@@ -2141,3 +2149,116 @@ window.addEventListener("popstate", function () {
     }
 
 });
+
+
+
+
+function forgotPassword() {
+    var form = document.getElementById('forgot-form');
+
+    // Bootstrap method to check form validity
+    if (form.checkValidity() === false) {
+        // If the form is not valid, trigger Bootstrap's native validation styles
+        form.classList.add('was-validated');
+        return;
+    }
+
+    var formData = new FormData(form);
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                // Handle successful response
+                console.log(response);
+
+                if (response.result == "Email is not registered") {
+                    document.getElementById("myToast").classList.remove("bg-success");
+                    document.getElementById("myToast").classList.add("bg-danger");
+                }
+                else {
+                    document.getElementById("myToast").classList.remove("bg-danger");
+                    document.getElementById("myToast").classList.add("bg-success");
+                }
+
+                var myToast = document.getElementById('myToast');
+
+                // Create a Bootstrap 5 Toast instance and show it
+                var toast = new bootstrap.Toast(myToast);
+                document.getElementById("mess").innerText = response.result;
+                toast.show();
+
+            } else {
+                // Handle error
+                console.error('Error:', xhr.status);
+            }
+        }
+    };
+
+    xhr.open('POST', 'index.php?action=forgotPassword', true);
+    xhr.send(formData);
+}
+
+
+
+function updatePassword() {
+    var urlParams = new URLSearchParams(window.location.search);
+
+    // Get the value of the 'id' parameter
+    var userEmail = urlParams.get('id');
+
+    // Output the email address (you can replace this with your actual logic)
+    console.log(userEmail);
+
+    var form = document.getElementById('update-form');
+
+    // Bootstrap method to check form validity
+    if (form.checkValidity() === false) {
+        // If the form is not valid, trigger Bootstrap's native validation styles
+        form.classList.add('was-validated');
+        return;
+    }
+
+    var formData = new FormData(form);
+    formData.append('id', userEmail);
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                // Handle successful response
+                console.log(response);
+
+                if (response.result == "Password update failed") {
+                    document.getElementById("myToast").classList.remove("bg-success");
+                    document.getElementById("myToast").classList.add("bg-danger");
+                }
+                else {
+                    document.getElementById("myToast").classList.remove("bg-danger");
+                    document.getElementById("myToast").classList.add("bg-success");
+                }
+
+                var myToast = document.getElementById('myToast');
+
+                // Create a Bootstrap 5 Toast instance and show it
+                var toast = new bootstrap.Toast(myToast);
+                document.getElementById("mess").innerText = response.result;
+                toast.show();
+
+                // Redirect to login.php after 5 seconds
+                setTimeout(function () {
+                    window.location.href = 'login.php';
+                }, 3000);
+
+            } else {
+                // Handle error
+                console.error('Error:', xhr.status);
+            }
+        }
+    };
+
+    xhr.open('POST', 'index.php?action=updatePassword', true);
+    xhr.send(formData);
+}

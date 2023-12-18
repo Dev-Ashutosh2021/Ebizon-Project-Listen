@@ -375,5 +375,11 @@ class MusicModel extends Database
         return $this->executeStatement("UPDATE users SET first_name=?, last_name=?, profile_pic=? WHERE user_id=?","sssi",$params);
     }
 
+
+    public function updateUserPassword($params)
+    {
+        return $this->executeStatement("UPDATE users SET password_hash=? WHERE email=?","ss",$params);
+    }
+
 }
 ?>

@@ -7,10 +7,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="createPlaylistForm">
+                <form id="createPlaylistForm" class="needs-validation" novalidate>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="playlistName">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="playlistName" required>
+                        <div class="invalid-feedback">Please enter a valid playlist name</div>
                     </div>
             </div>
             <div class="modal-footer">

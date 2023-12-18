@@ -24,27 +24,19 @@
                         </div>
                         <div class="card">
                             <div class="card-body p-sm-5">
-                                <h4>Login to <span class="text-primary">Listen</span></h4>
-                                <p class="fs-6">Welcome back! login with your data that you entered during registration
+                                <h4>Password <span class="text-primary">Recovery</span></h4>
+                                <p class="fs-6">Enter your email address and we will send you a link to reset your password.
                                 </p>
-                                <form id="login-form" class="mt-5 needs-validation" novalidate>
-                                    <div class="mb-3">
+                                <form id="forgot-form" class="mt-5 needs-validation" novalidate>
+                                    <div class="mb-5">
                                         <label for="email" class="form-label fw-medium">Email</label>
                                         <input type="email" id="email" class="form-control" name="email" required>
                                         <div class="invalid-feedback">Please enter a valid email address.</div>
                                     </div>
-                                    <div class="mb-2">
-                                        <label for="password" class="form-label fw-medium">Password</label>
-                                        <input type="password" id="password" class="form-control" name="password" required>
-                                        <div class="invalid-feedback">Please enter your password.</div>
-                                    </div>
-                                    <div class="mb-4 text-end">
-                                        <a href="password.php" class="link-primary fw-medium">Forgot Password?</a>
-                                    </div>
                                     <div class="mb-5">
-                                        <input type="button" class="btn btn-primary w-100" value="Login" onclick="login()">
+                                        <input type="button" class="btn btn-primary w-100" value="Reset Password" onclick="forgotPassword()">
                                     </div>
-                                    <p>Not registered yet?<br><a href="register.php" class="fw-medium external">Register</a></p>
+                                    <p>Do you have an Account?<br><a href="login.php" class="fw-medium external">Login</a></p>
                                 </form>
                             </div>
                         </div>
@@ -57,6 +49,5 @@
     <script src="js/scripts.bundle.js"></script>
     <script src="js/script.js"></script>
 </body>
-<!-- Mirrored from www.kri8thm.in/html/listen/theme/demo/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Nov 2023 15:18:34 GMT -->
 
 </html>

@@ -1,4 +1,8 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class MusicController extends BaseController
 {
 
@@ -1010,8 +1014,8 @@ class MusicController extends BaseController
                 $lastname = $_POST['lastName'];
                 $oldImage = $_POST['oldPic']; // Corrected field name
 
-                $_SESSION['first']=$firstname;
-                $_SESSION['last']=$lastname;
+                $_SESSION['first'] = $firstname;
+                $_SESSION['last'] = $lastname;
 
                 $adminModel = new MusicModel();
 
@@ -1026,7 +1030,7 @@ class MusicController extends BaseController
                     }
 
                     $thumbnailUploadPath = "images/users/" . basename($_FILES["profilePic"]["name"]);
-                    $_SESSION['pic']=$thumbnailUploadPath;
+                    $_SESSION['pic'] = $thumbnailUploadPath;
                     move_uploaded_file($_FILES["profilePic"]["tmp_name"], $thumbnailUploadPath);
 
                     $params = [$firstname, $lastname, $thumbnailUploadPath, $_SESSION['id']];
@@ -1062,4 +1066,92 @@ class MusicController extends BaseController
     }
 
 
+    public function forgotPassword()
+    {
+
+        require __DIR__ . '/../includes/PHPMailer/src/Exception.php';
+        require __DIR__ . '/../includes/PHPMailer/src/PHPMailer.php';
+        require __DIR__ . '/../includes/PHPMailer/src/SMTP.php';
+
+
+        header('Content-Type: application/json');
+
+        // Assuming you have a form field 'email' for the user's email address
+        $userEmail = $_POST['email']; // Make sure to sanitize and validate user input
+
+        $adminModel = new MusicModel();
+        $loginResult = $adminModel->getUserByEmail($userEmail);
+
+        if ($loginResult) {
+
+            try {
+                // Your Gmail credentials
+                $senderEmail = 'ashutoshuniyal223@gmail.com';
+                $senderPassword = 'kjut fzkp blsd ztts';
+
+                // Compose the email
+                $subject = 'Password Reset';
+                $message = 'Click the following link to reset your password: http://localhost/Ebizon%20Project/Listen/update-password.php?id=' . $userEmail;
+
+                // Send the email using PHPMailer
+                $mail = new PHPMailer(true);
+
+                // Server settings
+                $mail->isSMTP();
+                $mail->Host       = 'smtp.gmail.com';
+                $mail->SMTPAuth   = true;
+                $mail->Username   = $senderEmail;
+                $mail->Password   = $senderPassword;
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port       = 587;
+
+                // Recipient settings
+                $mail->setFrom($senderEmail, 'ebizon@listen.com');
+                $mail->addAddress($userEmail);
+
+                // Content
+                $mail->isHTML(true);
+                $mail->Subject = $subject;
+                $mail->Body    = $message;
+
+                $mail->send();
+
+                echo json_encode(['result' => 'Email sent successfully']);
+            } catch (Exception $e) {
+                echo json_encode(['error' => 'Error: ' . $e->getMessage()]);
+            }
+        } else {
+            echo json_encode(['result' => 'Email is not registered']);
+        }
+
+        exit;
+    }
+
+
+    public function updatePassword()
+    {
+        header('Content-Type: application/json');
+
+        try {
+            // Get the user's email and token from the request
+            $userEmail = $_POST['id'];
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+            // Assuming $result is a boolean indicating success or failure
+            // You need to implement the logic for updating the password in your model
+            $adminModel = new MusicModel();
+            $result = $adminModel->updateUserPassword([$password, $userEmail]);
+
+
+            if ($result) {
+                echo json_encode(['result' => 'Password updated successfully']);
+            } else {
+                echo json_encode(['result' => 'Password update failed']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['error' => 'Error: ' . $e->getMessage()]);
+        }
+
+        exit;
+    }
 }
