@@ -1099,12 +1099,6 @@ var Player = function () {
                         <i class="ri-close-line fs-6"></i>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:void(0);" role="button" class="d-inline-flex" data-favorite-id="${song.id}">
-                        <i class="ri-heart-line heart-empty"></i>
-                        <i class="ri-heart-fill heart-fill"></i>
-                    </a>
-                </li>
             </ul>
         </div>`;
   }
