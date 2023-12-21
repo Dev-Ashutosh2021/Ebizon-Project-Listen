@@ -15,16 +15,6 @@
                 <div class="player-volume dropdown d-none d-md-block"><button class="btn btn-icon" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-label="Volume" aria-expanded="false"><i class="ri-volume-mute-fill fs-5 d-none"></i> <i class="ri-volume-down-fill fs-5"></i> <i class="ri-volume-up-fill fs-5 d-none"></i></button>
                     <div class="dropdown-menu prevent-click"><input type="range" class="amplitude-volume-slider" value="50" min="0" max="100" aria-label="Volume slider"></div>
                 </div>
-                <div class="dropstart d-none d-md-block"><button class="btn btn-icon" data-bs-toggle="dropdown" aria-label="Song options" aria-expanded="false"><i class="ri-more-2-fill fs-5"></i></button>
-                    <ul class="dropdown-menu dropdown-menu-sm" id="player_options">
-                        <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-favorite-id="1">Favorite</a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0);" role="button" data-playlist-id="1">Add to playlist</a></li>
-                        <li><a class="dropdown-item" href="audio/ringtone-1.mp3" download>Download</a></li>
-                        <li><a class="dropdown-item" href="javascript:void(0);" role="button">Share</a></li>
-                        <li class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="song-details.html">View details</a></li>
-                    </ul>
-                </div>
                 <div class="playlist dropstart me-3"><button class="btn btn-icon" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-label="Playlist" aria-expanded="false"><i class="ri-play-list-fill fs-5"></i></button>
                     <div class="dropdown-menu playlist__dropdown">
                         <div class="playlist__head d-flex align-items-center justify-content-between">
