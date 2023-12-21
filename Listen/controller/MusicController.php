@@ -704,8 +704,7 @@ class MusicController extends BaseController
 
     function logout()
     {
-        session_unset();
-        session_destroy();
+        unset($_SESSION['id']);
         echo json_encode(['status' => 'successfully logout']);
     }
 

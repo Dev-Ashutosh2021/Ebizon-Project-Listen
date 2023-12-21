@@ -70,8 +70,7 @@ class AdminController extends BaseController
 
     function logout()
     {
-        session_unset();
-        session_destroy();
+        unset($_SESSION['admin_id']);
         echo json_encode(['status' => 'successfully logout']);
     }
     

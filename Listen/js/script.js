@@ -203,31 +203,32 @@ function fetchAll() {
 
 
 function topCharts() {
-    storedData = localStorage.getItem('key');
-    allData = JSON.parse(storedData);
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'index.php?action=topCharts', true);
+    if (document.getElementById('top-charts')) {
+        storedData = localStorage.getItem('key');
+        allData = JSON.parse(storedData);
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'index.php?action=topCharts', true);
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var topsongs = JSON.parse(xhr.responseText);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var topsongs = JSON.parse(xhr.responseText);
 
-            topsongs.forEach((song) => {
-                const song_thumb_path = song.thumbnail;
+                topsongs.forEach((song) => {
+                    const song_thumb_path = song.thumbnail;
 
-                // Using the split method to separate the path by '/'
-                const parts = song_thumb_path.split('/');
+                    // Using the split method to separate the path by '/'
+                    const parts = song_thumb_path.split('/');
 
-                // Accessing the last part of the array to get the filename
-                const trim_image = parts[parts.length - 1];
+                    // Accessing the last part of the array to get the filename
+                    const trim_image = parts[parts.length - 1];
 
-                // The artist_id you want to match
-                const song_ArtistId = song.artist_id; // Replace with the desired artist_id
+                    // The artist_id you want to match
+                    const song_ArtistId = song.artist_id; // Replace with the desired artist_id
 
-                // Find the artist with the matching artist_id
-                const final_artist = allData.totalartists.find(artist => artist.artist_id === song_ArtistId);
+                    // Find the artist with the matching artist_id
+                    const final_artist = allData.totalartists.find(artist => artist.artist_id === song_ArtistId);
 
-                document.getElementById('top-charts').innerHTML += `<div class="swiper-slide">
+                    document.getElementById('top-charts').innerHTML += `<div class="swiper-slide">
                 <div class="cover cover--round" data-song-id="${song.song_id}" data-song-name="${song.title}" data-song-artist="${final_artist.name}"
                     data-song-album="${song.album_id}" data-song-url="../Admin/${song.file_path}" data-song-cover="images/cover/small/${trim_image}">
                     <div class="cover__head">
@@ -257,41 +258,46 @@ function topCharts() {
                     </div>
                 </div>
             </div>`;
-            });
-        }
-    };
+                });
+            }
+        };
 
-    xhr.send();
+        xhr.send();
+    }
+    else {
+        setTimeout(topCharts, 50);
+    }
 }
 
 
 
 function newReleases() {
-    storedData = localStorage.getItem('key');
-    allData = JSON.parse(storedData);
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'index.php?action=newReleases', true);
+    if (document.getElementById('new-release-div')) {
+        storedData = localStorage.getItem('key');
+        allData = JSON.parse(storedData);
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'index.php?action=newReleases', true);
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var newsongs = JSON.parse(xhr.responseText);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var newsongs = JSON.parse(xhr.responseText);
 
-            newsongs.forEach((song) => {
-                const song_thumb_path = song.thumbnail;
+                newsongs.forEach((song) => {
+                    const song_thumb_path = song.thumbnail;
 
-                // Using the split method to separate the path by '/'
-                const parts = song_thumb_path.split('/');
+                    // Using the split method to separate the path by '/'
+                    const parts = song_thumb_path.split('/');
 
-                // Accessing the last part of the array to get the filename
-                const trim_image = parts[parts.length - 1];
+                    // Accessing the last part of the array to get the filename
+                    const trim_image = parts[parts.length - 1];
 
-                // The artist_id you want to match
-                const song_ArtistId = song.artist_id; // Replace with the desired artist_id
+                    // The artist_id you want to match
+                    const song_ArtistId = song.artist_id; // Replace with the desired artist_id
 
-                // Find the artist with the matching artist_id
-                const final_artist = allData.totalartists.find(artist => artist.artist_id === song_ArtistId);
+                    // Find the artist with the matching artist_id
+                    const final_artist = allData.totalartists.find(artist => artist.artist_id === song_ArtistId);
 
-                document.getElementById('new-release-div').innerHTML += `<div class="swiper-slide">
+                    document.getElementById('new-release-div').innerHTML += `<div class="swiper-slide">
                 <div class="cover cover--round" data-song-id="${song.song_id}" data-song-name="${song.title}" data-song-artist="${final_artist.name}"
                     data-song-album="${song.album_id}" data-song-url="../Admin/${song.file_path}" data-song-cover="images/cover/small/${trim_image}">
                     <div class="cover__head">
@@ -321,12 +327,16 @@ function newReleases() {
                     </div>
                 </div>
             </div>`;
-            });
+                });
 
-        }
-    };
+            }
+        };
 
-    xhr.send();
+        xhr.send();
+    }
+    else {
+        setTimeout(newReleases,50);
+    }
 }
 
 

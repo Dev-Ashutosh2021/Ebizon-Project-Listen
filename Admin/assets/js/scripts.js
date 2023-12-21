@@ -381,7 +381,6 @@ function users() {
                         <th>ID</th>
                         <th>First Name</th>
                         <th>Last Name</th>
-                        <th>Username</th>
                         <th>Email</th>
                         <th>Created Time</th>
                         <th>Actions</th>
@@ -799,11 +798,10 @@ function getAllUsers() {
                 row.insertCell(0).innerText = user.user_id;
                 row.insertCell(1).innerText = user.first_name;
                 row.insertCell(2).innerText = user.last_name;
-                row.insertCell(3).innerText = user.username;
-                row.insertCell(4).innerText = user.email;
-                row.insertCell(5).innerText = user.created_at;
+                row.insertCell(3).innerText = user.email;
+                row.insertCell(4).innerText = user.created_at;
 
-                var actionsCell = row.insertCell(6);
+                var actionsCell = row.insertCell(5);
                 actionsCell.innerHTML = `<div class="d-flex gap-3"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalUser" onclick="fillEditModalUsers(${user.user_id})"><i class="fa-solid fa-pen-to-square fa-lg" style="color: #ffffff;"></i></button><button type="button" class="btn btn-danger" onclick="openDeleteUserModal(${user.user_id})"><i class="fa-solid fa-trash fa-lg" style="color: #ffffff;"></i></button></div>`;
             });
             initializeTable();

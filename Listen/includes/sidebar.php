@@ -5,12 +5,13 @@
     <div class="sidebar-body" data-scroll="true">
         <nav class="navbar d-block p-0">
             <ul class="navbar-nav">
-                <li class="nav-item" onclick="fetchAll();"><a href="home.php" class="nav-link d-flex align-items-center" id="home"><i class="ri-home-4-line fs-5"></i>
+                <li class="nav-item" onclick="home();"><a href="home.php" class="nav-link d-flex align-items-center" id="home"><i class="ri-home-4-line fs-5"></i>
                         <span class="ps-3">Home</span></a></li>
                 <li class="nav-item" onclick="genres();checkAuthentication();"><a href="genres.php" class="nav-link d-flex align-items-center" id="genres"><i class="ri-disc-line fs-5"></i> <span class="ps-3">Genres</span></a></li>
                 <li class="nav-item" onclick="musics();"><a href="music.php" class="nav-link d-flex align-items-center" id="music"><i class="ri-music-2-line fs-5"></i> <span class="ps-3">Musics</span></a></li>
                 <li class="nav-item" onclick="albums();"><a href="albums.php" class="nav-link d-flex align-items-center" id="albums"><i class="ri-album-line fs-5"></i> <span class="ps-3">Albums</span></a></li>
                 <li class="nav-item" onclick="artists();"><a href="artists.php" class="nav-link d-flex align-items-center" id="artists"><i class="ri-mic-line fs-5"></i> <span class="ps-3">Artists</span></a></li>
+                <li class="nav-item"><a href="http://localhost/Music%20Blog/" target="_blank" class="nav-link d-flex align-items-center" id="blog"><i class="ri-article-line fs-5"></i> <span class="ps-3">Blog</span></a></li>
                 <?php if (isset($_SESSION['id'])) {
                     echo '<li class="nav-item nav-item--head"><span class="nav-item--head__text">Music</span> <span class="nav-item--head__dots">...</span></li>
                 <li class="nav-item"><a href="favorites.php" class="nav-link d-flex align-items-center" onclick="favourites();" id="favorites"><i class="ri-heart-line fs-5"></i> <span class="ps-3">Favourites</span></a></li>
