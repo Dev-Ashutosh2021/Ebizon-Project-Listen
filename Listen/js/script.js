@@ -172,6 +172,7 @@ function artistLoad() {
 
 
 function home() {
+    activeLinks();
     fetchAll();
     topCharts();
     newReleases();
@@ -335,7 +336,7 @@ function newReleases() {
         xhr.send();
     }
     else {
-        setTimeout(newReleases,50);
+        setTimeout(newReleases, 50);
     }
 }
 
@@ -552,6 +553,7 @@ function login() {
 
 function songDetails() {
     if (document.getElementById('song-detail')) {
+        activeLinks();
         storedData = localStorage.getItem('key');
         parsedData = JSON.parse(storedData);
         // Get the current URL
@@ -640,6 +642,7 @@ function songDetails() {
 
 
 function artistDetails() {
+    activeLinks();
     fetchFavSong();
     fetchFavAlbum();
     storedData = localStorage.getItem('key');
@@ -804,6 +807,7 @@ function artistDetails() {
 
 
 function albumDetails() {
+    activeLinks();
     fetchFavSong();
     storedData = localStorage.getItem('key');
     parsedData = JSON.parse(storedData);
@@ -933,6 +937,7 @@ function albumDetails() {
 
 
 function genres() {
+    activeLinks();
     if (document.getElementById('genre-div')) {
         document.getElementById("genre-div").innerHTML = '';
         storedData = localStorage.getItem('key');
@@ -955,6 +960,7 @@ function genres() {
 
 
 function genreDetails() {
+    activeLinks();
     fetchFavSong();
     if (document.getElementById('genre-div1') && document.getElementById('genre-div2')) {
         document.getElementById("genre-div1").innerHTML = ``;
@@ -1068,6 +1074,7 @@ function genreDetails() {
 
 
 function musics() {
+    activeLinks();
     fetchFavSong();
     storedData = localStorage.getItem('key');
     parsedData = JSON.parse(storedData);
@@ -1185,6 +1192,7 @@ function musics() {
 
 
 function albums() {
+    activeLinks();
     fetchFavAlbum();
     storedData = localStorage.getItem('key');
     parsedData = JSON.parse(storedData);
@@ -1251,6 +1259,7 @@ function albums() {
 
 
 function artists() {
+    activeLinks();
     storedData = localStorage.getItem('key');
     parsedData = JSON.parse(storedData);
     if (document.getElementById('artist-div')) {
@@ -1288,6 +1297,7 @@ function artists() {
 
 
 function recentHistory() {
+    activeLinks();
     storedData = localStorage.getItem('key');
     parsedData = JSON.parse(storedData);
     if (document.getElementById('recent-1') && document.getElementById('recent-2')) {
@@ -1605,6 +1615,7 @@ function fetchFavSong() {
 
 
 function favourites() {
+    activeLinks();
     storedData = localStorage.getItem('key');
     parsedData = JSON.parse(storedData);
     if (document.getElementById("song-1") && document.getElementById("song-2") && document.getElementById("fav-album")) {
@@ -2271,4 +2282,71 @@ function updatePassword() {
 
     xhr.open('POST', 'index.php?action=updatePassword', true);
     xhr.send(formData);
+}
+
+
+
+function activeLinks() {
+    setTimeout(function() {
+        // Extract the part after the last / and before the file extension
+        var path = window.location.href.split('/').pop().split('.')[0];
+    
+        // Replace %20 with a space
+        var result = path.replace('%20', ' ');
+    
+        // Remove the 'active' class from all nav-links
+        document.querySelectorAll('.navbar-nav .nav-link').forEach(function(link) {
+            link.classList.remove('active');
+        });
+    
+        switch (result) {
+            case 'home':
+                document.getElementById("home").classList.add('active');
+                break;
+    
+            case 'genres':
+                document.getElementById("genres").classList.add('active');
+                break;
+    
+            case 'music':
+                document.getElementById("music").classList.add('active');
+                break;
+    
+            case 'albums':
+                document.getElementById("albums").classList.add('active');
+                break;
+    
+            case 'artists':
+                document.getElementById("artists").classList.add('active');
+                break;
+    
+            case 'favorites':
+                document.getElementById("favorites").classList.add('active');
+                break;
+    
+            case 'history':
+                document.getElementById("history").classList.add('active');
+                break;
+    
+            case 'song-details':
+                document.getElementById("music").classList.add('active');
+                break;
+    
+            case 'artist-details':
+                document.getElementById("artists").classList.add('active');
+                break;
+    
+            case 'genre-details':
+                document.getElementById("genres").classList.add('active');
+                break;
+    
+            case 'album-details':
+                document.getElementById("albums").classList.add('active');
+                break;
+    
+            default:
+                console.log('No page found');
+        }
+    }, 100); // 50 seconds (50,000 milliseconds)
+    
 }
